@@ -335,9 +335,9 @@ function lookCard(item) {
 }
 
 function productForm(product, variants, full) {
-  return `<form class="product-form" data-product-form data-handle="${escapeAttr(product.handle)}" data-title="${escapeAttr(product.title)}" data-image="${escapeAttr(product.image)}">
+  return `<form class="product-form${full ? "" : " product-form--compact"}" data-product-form data-handle="${escapeAttr(product.handle)}" data-title="${escapeAttr(product.title)}" data-image="${escapeAttr(product.image)}">
     <select name="variant" aria-label="Choose option" ${product.available ? "" : "disabled"}>
-      ${variants.map((variant) => `<option value="${variant.id}" data-title="${escapeAttr(variant.title)}" data-sku="${escapeAttr(variant.sku || "")}" data-price="${Number(variant.price || 0)}">${escapeHtml(variant.title)}${variant.sku ? ` | SKU: ${escapeHtml(variant.sku)}` : ""}</option>`).join("")}
+      ${variants.map((variant) => `<option value="${variant.id}" data-title="${escapeAttr(variant.title)}" data-sku="${escapeAttr(variant.sku || "")}" data-price="${Number(variant.price || 0)}">${escapeHtml(full && variant.sku ? `${variant.title} | SKU: ${variant.sku}` : variant.title)}</option>`).join("")}
     </select>
     ${full ? '<div class="qty-row"><label for="quantity">Quantity</label><input id="quantity" name="quantity" type="number" min="1" value="1"></div>' : '<input name="quantity" type="hidden" value="1">'}
     <button type="submit" ${product.available ? "" : "disabled"}>${product.available ? "Add to Cart" : "Sold Out"}</button>

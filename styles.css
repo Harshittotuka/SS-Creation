@@ -80,6 +80,17 @@ body.page-leaving {
   }
 }
 
+@keyframes cart-count-bump {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.24);
+  }
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -230,6 +241,10 @@ select {
   color: #fff;
   font-size: 11px;
   line-height: 1;
+}
+
+.cart-count.is-bumping {
+  animation: cart-count-bump 360ms ease;
 }
 
 .desktop-nav {
@@ -488,7 +503,7 @@ h4 {
   scrollbar-width: none;
   padding: 2px 0 18px;
   cursor: grab;
-  touch-action: pan-y;
+  touch-action: pan-x pinch-zoom;
   user-select: none;
 }
 
@@ -589,7 +604,7 @@ h4 {
   scrollbar-width: none;
   padding: 2px 2px 18px;
   cursor: grab;
-  touch-action: pan-y;
+  touch-action: pan-x pinch-zoom;
   user-select: none;
 }
 
@@ -707,6 +722,7 @@ h4 {
 
 .product-card {
   min-width: 0;
+  overflow: hidden;
   text-align: center;
   background: #fff;
   border: 1px solid var(--border);
@@ -778,14 +794,23 @@ h4 {
   margin-top: 10px;
   display: grid;
   gap: 8px;
+  min-width: 0;
 }
 
 .product-form select,
 .product-form input {
+  width: 100%;
+  min-width: 0;
   min-height: 34px;
   border: 1px solid var(--border);
   padding: 8px;
   background: #fff;
+}
+
+.product-form select {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .button,
@@ -1320,6 +1345,64 @@ h4 {
   padding: 50px 0;
 }
 
+.cart-toast {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 110;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  width: min(390px, calc(100vw - 32px));
+  padding: 14px;
+  border: 1px solid rgba(128, 0, 0, 0.18);
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(18px);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.cart-toast.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.cart-toast strong,
+.cart-toast span {
+  display: block;
+}
+
+.cart-toast strong {
+  color: var(--brand);
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.cart-toast span {
+  overflow: hidden;
+  color: var(--light-text);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cart-toast button {
+  min-height: 34px;
+  border: 1px solid var(--brand);
+  background: var(--brand);
+  color: #fff;
+  padding: 0 12px;
+  cursor: pointer;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
 @media (max-width: 1020px) {
   .desktop-nav {
     overflow-x: auto;
@@ -1479,11 +1562,34 @@ h4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .product-card {
+    padding: 7px;
+  }
+
   .product-card h3 {
+    min-height: 36px;
     font-size: 12px;
   }
 
+  .product-form {
+    gap: 6px;
+  }
+
   .product-form select {
+    min-height: 32px;
+    padding: 6px;
     font-size: 12px;
+  }
+
+  .product-form button {
+    min-height: 36px;
+    padding: 0 8px;
+    font-size: 11px;
+  }
+
+  .cart-toast {
+    right: 12px;
+    bottom: 12px;
+    width: calc(100vw - 24px);
   }
 }

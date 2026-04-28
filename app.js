@@ -7,8 +7,9 @@ const money = new Intl.NumberFormat("en-IN", {
   maximumFractionDigits: 0,
 });
 
-let cart = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
+let cart = loadCart();
 const carouselAnimations = new WeakMap();
+let cartToastTimer = null;
 
 document.addEventListener("DOMContentLoaded", () => {
   bindPageTransitions();
@@ -393,9 +394,11 @@ function getCarouselTileStep(track, itemSelector, fallback) {
 function bindCarouselDrag(track, onMove) {
   let isDragging = false;
   let startX = 0;
+  let startY = 0;
   let startScroll = 0;
   let moved = false;
   let suppressClick = false;
+  let axisLocked = false;
 
   track.addEventListener("pointerdown", (event) => {
     if (event.button !== 0 || event.target.closest("button, input, select, textarea")) return;
@@ -406,16 +409,29 @@ function bindCarouselDrag(track, onMove) {
     prepareLoopMove(track, -1);
     isDragging = true;
     moved = false;
+    axisLocked = false;
     startX = event.clientX;
+    startY = event.clientY;
     startScroll = track.scrollLeft;
-    track.classList.add("is-dragging");
-    track.setPointerCapture?.(event.pointerId);
   });
 
   track.addEventListener("pointermove", (event) => {
     if (!isDragging) return;
     const delta = event.clientX - startX;
-    if (Math.abs(delta) > 5) {
+    const verticalDelta = event.clientY - startY;
+    const absX = Math.abs(delta);
+    const absY = Math.abs(verticalDelta);
+    if (!axisLocked) {
+      if (Math.max(absX, absY) < 6) return;
+      if (absY > absX * 1.15) {
+        isDragging = false;
+        return;
+      }
+      axisLocked = true;
+      track.classList.add("is-dragging");
+      track.setPointerCapture?.(event.pointerId);
+    }
+    if (absX > 5) {
       moved = true;
       suppressClick = true;
     }
@@ -428,8 +444,11 @@ function bindCarouselDrag(track, onMove) {
   const finishDrag = (event) => {
     if (!isDragging) return;
     isDragging = false;
+    axisLocked = false;
     track.classList.remove("is-dragging");
-    track.releasePointerCapture?.(event.pointerId);
+    if (track.hasPointerCapture?.(event.pointerId)) {
+      track.releasePointerCapture?.(event.pointerId);
+    }
     normalizeLoopPosition(track);
     onMove?.();
     if (moved) {
@@ -596,11 +615,12 @@ function bindCart() {
     const form = event.target.closest("[data-product-form]");
     if (!form) return;
     event.preventDefault();
-    addFromForm(form);
+    const addedItem = addFromForm(form);
+    if (!addedItem) return;
     if (event.submitter?.hasAttribute("data-buy-now")) {
       openWhatsApp();
     } else {
-      drawer?.classList.add("open");
+      showCartToast(addedItem);
     }
   });
 
@@ -627,7 +647,7 @@ function bindCart() {
 function addFromForm(form) {
   const variantSelect = form.querySelector("[name='variant']");
   const selected = variantSelect?.selectedOptions?.[0];
-  if (!selected) return;
+  if (!selected) return null;
 
   const qty = Math.max(1, Number(form.querySelector("[name='quantity']")?.value || 1));
   const product = {
@@ -652,10 +672,84 @@ function addFromForm(form) {
   else cart.push(item);
   saveCart();
   updateCart();
+  return item;
+}
+
+function loadCart() {
+  try {
+    const raw = window.localStorage?.getItem(CART_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .filter((item) => item && typeof item === "object" && item.key && item.handle && item.title)
+      .map((item) => {
+        const price = Number(item.price);
+        const quantity = Number(item.quantity);
+        return {
+          key: String(item.key),
+          handle: String(item.handle),
+          title: String(item.title),
+          image: String(item.image || ""),
+          variantId: String(item.variantId || ""),
+          variantTitle: String(item.variantTitle || "Default"),
+          sku: String(item.sku || ""),
+          price: Number.isFinite(price) && price > 0 ? price : 0,
+          quantity: Number.isFinite(quantity) && quantity > 0 ? quantity : 1,
+        };
+      });
+  } catch (error) {
+    return [];
+  }
 }
 
 function saveCart() {
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  try {
+    window.localStorage?.setItem(CART_KEY, JSON.stringify(cart));
+  } catch (error) {
+    // Cart still works for the current page even if storage is blocked or full.
+  }
+}
+
+function getCartToast() {
+  let toast = document.querySelector("[data-cart-toast]");
+  if (toast) return toast;
+
+  toast = document.createElement("div");
+  toast.className = "cart-toast";
+  toast.setAttribute("data-cart-toast", "");
+  toast.setAttribute("role", "status");
+  toast.setAttribute("aria-live", "polite");
+  toast.innerHTML = `
+    <div>
+      <strong data-cart-toast-title>Added to Bag</strong>
+      <span data-cart-toast-meta></span>
+    </div>
+    <button type="button" data-cart-toast-open>View Bag</button>
+  `;
+  toast.querySelector("[data-cart-toast-open]")?.addEventListener("click", () => {
+    document.querySelector("[data-cart-drawer]")?.classList.add("open");
+  });
+  document.body.appendChild(toast);
+  return toast;
+}
+
+function showCartToast(item) {
+  const toast = getCartToast();
+  const title = toast.querySelector("[data-cart-toast-title]");
+  const meta = toast.querySelector("[data-cart-toast-meta]");
+  if (title) title.textContent = "Added to Bag";
+  if (meta) meta.textContent = `${item.title} - ${item.variantTitle}`;
+  window.clearTimeout(cartToastTimer);
+  toast.classList.remove("show");
+  requestAnimationFrame(() => toast.classList.add("show"));
+  document.querySelectorAll("[data-cart-count]").forEach((node) => {
+    node.classList.remove("is-bumping");
+    requestAnimationFrame(() => node.classList.add("is-bumping"));
+  });
+  cartToastTimer = window.setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2600);
 }
 
 function updateCart() {
