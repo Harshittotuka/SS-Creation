@@ -4,7 +4,9 @@ const path = require("path");
 const root = __dirname;
 const data = JSON.parse(fs.readFileSync(path.join(root, "data/products.json"), "utf8"));
 const shopTheLookData = JSON.parse(fs.readFileSync(path.join(root, "data/shop-the-look.json"), "utf8"));
-const products = data.products.map(normalizeProduct);
+const products = data.products
+  .map(normalizeProduct)
+  .filter((product) => !product.sections.includes("gift-cards"));
 const shopTheLookVideos = shopTheLookData.videos || [];
 const CONTACT_EMAIL = "monikagupta2514@gmail.com";
 const CONTACT_PHONE = "9950440550";
@@ -20,7 +22,6 @@ const nav = [
   ["Coord Sets / Dresses", "/collections/coord-sets/"],
   ["Kurta and Suit Sets", "/collections/kurta-and-suit-sets/"],
   ["Best Sellers", "/collections/best-sellers/"],
-  ["Gift Cards", "/collections/gift-cards/"],
   ["Contact", "/pages/contact/"],
   ["About Us", "/pages/about-us/"],
   ["Blogs", "/blogs/news/"],
@@ -33,7 +34,6 @@ const collections = [
   ["coord-sets", "Coord Sets / Dresses"],
   ["kurta-and-suit-sets", "Kurta and Suit Sets"],
   ["best-sellers", "Best Sellers"],
-  ["gift-cards", "Gift Cards"],
   ["festive-vibes", "Festive Vibes"],
   ["floral-affairs", "Floral Affairs"],
   ["casual-picks", "Casual Picks"],
@@ -235,8 +235,6 @@ function homePage() {
       ${imageLink("/collections/casual-picks/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20231130-WA0023.jpg?v=1701382986")}
       ${imageLink("/collections/wedding-slides/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20231130-WA0025.jpg?v=1701382985")}
     </div></section>
-    ${sectionHeading("Give The Gift Of Cheerfulness", "You can have anything you want in life if you dress for it. Spread love with SSCreation")}
-    <section class="global-section gift-banner section-tight"><a class="image-shell" href="/collections/gift-cards/">${lazyImg("https://cdn.shopify.com/s/files/1/0632/9656/9522/files/rooh_gift_card_banner.jpg?v=1701196517", "Shop gift cards")}</a></section>
     ${pressSection()}
     ${sectionHeading("Rooh Of SSCreation", "True Souls Of SSCreation")}
     ${storyStrip(["test1.jpg?v=1701538692?v=1704873366", "test8.png?v=1702078788", "test3.jpg?v=1701538692", "test4.jpg?v=1701538693", "test2.png?v=1701195007", "test6.jpg?v=1701538692", "test5.jpg?v=1701538692", "test8.png?v=1702078788"])}
