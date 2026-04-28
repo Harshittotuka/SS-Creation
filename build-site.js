@@ -22,20 +22,20 @@ const nav = [
 ];
 
 const collections = [
-  ["new-arrival", "New Arrival", (product) => product.isNew],
-  ["ready-to-dispatch", "Ready To Dispatch", (product) => product.available],
-  ["sale", "Sale", (product) => product.onSale],
-  ["coord-sets", "Coord Sets / Dresses", (product) => product.categories.has("coord")],
-  ["kurta-and-suit-sets", "Kurta and Suit Sets", (product) => product.categories.has("kurta")],
-  ["best-sellers", "Best Sellers", (product) => product.tags.includes("bs")],
-  ["gift-cards", "Gift Cards", (product) => /gift/i.test(product.title)],
-  ["festive-vibes", "Festive Vibes", (product) => product.tags.includes("fv")],
-  ["floral-affairs", "Floral Affairs", (product) => product.tags.includes("fa")],
-  ["casual-picks", "Casual Picks", (product) => product.tags.includes("cp")],
-  ["wedding-slides", "Wedding Slides", (product) => product.tags.includes("ws")],
+  ["new-arrival", "New Arrival"],
+  ["ready-to-dispatch", "Ready To Dispatch"],
+  ["sale", "Sale"],
+  ["coord-sets", "Coord Sets / Dresses"],
+  ["kurta-and-suit-sets", "Kurta and Suit Sets"],
+  ["best-sellers", "Best Sellers"],
+  ["gift-cards", "Gift Cards"],
+  ["festive-vibes", "Festive Vibes"],
+  ["floral-affairs", "Floral Affairs"],
+  ["casual-picks", "Casual Picks"],
+  ["wedding-slides", "Wedding Slides"],
 ];
 
-const collectionMap = new Map(collections.map(([slug, title, filter]) => [slug, { title, products: products.filter(filter) }]));
+const collectionMap = new Map(collections.map(([slug, title]) => [slug, { title, products: products.filter((product) => product.sections.includes(slug)) }]));
 
 write("index.html", homePage());
 for (const [slug, { title, products: items }] of collectionMap) {
@@ -63,6 +63,7 @@ function normalizeProduct(product) {
   return {
     ...product,
     tags,
+    sections: normalizeSections(product.sections),
     variants,
     price,
     compareAt,
@@ -74,6 +75,20 @@ function normalizeProduct(product) {
     hoverImage: product.images?.[1]?.src || product.images?.[0]?.src || "",
     descriptionText: stripHtml(product.descriptionHtml || ""),
   };
+}
+
+function normalizeSections(sections) {
+  if (!Array.isArray(sections)) return [];
+  return [...new Set(sections.map((section) => slugifySection(section)).filter(Boolean))];
+}
+
+function slugifySection(section) {
+  return String(section || "")
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 function layout(title, body, extraClass = "") {
@@ -355,7 +370,7 @@ function pressSection() {
 
 function storyStrip(names) {
   const doubled = names.concat(names);
-  return `<section class="global-section story-strip section-tight"><ul>${doubled.map((name) => `<li>${lazyImg(`https://cdn.shopify.com/s/files/1/0632/9656/9522/files/${name}`, "")}</li>`).join("")}</ul></section>`;
+  return `<section class="story-strip section-tight"><ul>${doubled.map((name) => `<li>${lazyImg(`https://cdn.shopify.com/s/files/1/0632/9656/9522/files/${name}`, "")}</li>`).join("")}</ul></section>`;
 }
 
 function contactCopy() {

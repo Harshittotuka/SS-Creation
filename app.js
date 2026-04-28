@@ -11,6 +11,7 @@ let cart = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
 const carouselAnimations = new WeakMap();
 
 document.addEventListener("DOMContentLoaded", () => {
+  bindPageTransitions();
   bindScrollReveal();
   bindAnnouncement();
   bindMenus();
@@ -23,6 +24,41 @@ document.addEventListener("DOMContentLoaded", () => {
   bindCart();
   updateCart();
 });
+
+window.addEventListener("pageshow", () => {
+  document.body.classList.remove("page-leaving");
+  requestAnimationFrame(() => document.body.classList.add("page-ready"));
+});
+
+function bindPageTransitions() {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const pageSections = Array.from(document.querySelectorAll(".site-wrap > *, body > .global-section, .section-footer"));
+  pageSections.forEach((section, index) => {
+    section.dataset.pageSection = "";
+    section.style.setProperty("--page-delay", `${Math.min(index, 5) * 55}ms`);
+  });
+  document.body.classList.add("page-transition-ready");
+  requestAnimationFrame(() => document.body.classList.add("page-ready"));
+  if (reduceMotion) return;
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (!link || event.defaultPrevented) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    if (link.target || link.hasAttribute("download")) return;
+    if (link.closest("[data-cart-open], [data-menu-open], [data-menu-close], [data-video-toggle]")) return;
+
+    const url = new URL(link.href, window.location.href);
+    if (url.origin !== window.location.origin) return;
+    if (url.pathname === window.location.pathname && url.search === window.location.search) return;
+
+    event.preventDefault();
+    document.body.classList.add("page-leaving");
+    window.setTimeout(() => {
+      window.location.href = url.href;
+    }, 180);
+  });
+}
 
 function bindScrollReveal() {
   const revealSelectors = [
@@ -54,7 +90,6 @@ function bindScrollReveal() {
   const allItems = [...new Set([...revealItems, ...staggerItems])];
 
   if (!allItems.length) return;
-  document.body.classList.add("reveal-ready");
 
   allItems.forEach((item, index) => {
     item.dataset.reveal = "";
@@ -65,18 +100,34 @@ function bindScrollReveal() {
 
   if (reduceMotion || !("IntersectionObserver" in window)) {
     allItems.forEach((item) => item.classList.add("is-revealed"));
+    document.body.classList.add("reveal-ready");
     return;
   }
+
+  const revealNow = (item) => {
+    item.classList.add("is-revealed");
+  };
+  const shouldRevealImmediately = (item) => {
+    const rect = item.getBoundingClientRect();
+    return rect.top < window.innerHeight * 1.15;
+  };
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
-      entry.target.classList.add("is-revealed");
+      revealNow(entry.target);
       observer.unobserve(entry.target);
     });
-  }, { rootMargin: "0px 0px -8%", threshold: 0.08 });
+  }, { rootMargin: "0px 0px 12%", threshold: 0.04 });
 
-  allItems.forEach((item) => observer.observe(item));
+  allItems.forEach((item) => {
+    if (shouldRevealImmediately(item)) {
+      revealNow(item);
+    } else {
+      observer.observe(item);
+    }
+  });
+  document.body.classList.add("reveal-ready");
 }
 
 function bindAnnouncement() {
