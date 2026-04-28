@@ -703,7 +703,7 @@ function openWhatsApp() {
       item.sku ? `SKU: ${item.sku}` : "",
       `Qty: ${item.quantity}`,
       `Price: ${money.format(item.price)}`,
-      `Product: ${location.origin}/products/${item.handle}/`,
+      `Product: ${getSiteRoot()}products/${item.handle}/`,
     ].filter(Boolean).join("\n")),
     "",
     `Total: ${money.format(total)}`,
@@ -711,6 +711,13 @@ function openWhatsApp() {
     "Please confirm availability and payment details.",
   ];
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener");
+}
+
+function getSiteRoot() {
+  const script = document.querySelector('script[src$="app.js"]');
+  if (!script) return `${location.origin}/`;
+  const url = new URL(script.getAttribute("src"), location.href);
+  return url.href.replace(/app\.js(?:\?.*)?$/, "");
 }
 
 function escapeHtml(value) {

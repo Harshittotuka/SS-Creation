@@ -498,5 +498,14 @@ function escapeAttr(value) {
 function write(file, html) {
   const target = path.join(root, file);
   fs.mkdirSync(path.dirname(target), { recursive: true });
-  fs.writeFileSync(target, html, "utf8");
+  fs.writeFileSync(target, relativizeRootUrls(file, html), "utf8");
+}
+
+function relativizeRootUrls(file, html) {
+  const depth = path.dirname(file) === "." ? 0 : path.dirname(file).split(/[\\/]/).length;
+  const prefix = depth === 0 ? "" : "../".repeat(depth);
+  return html.replace(/\b(href|src|action)="\/(?!\/)([^"]*)"/g, (_, attr, value) => {
+    const relative = value ? `${prefix}${value}` : (prefix || "./");
+    return `${attr}="${relative}"`;
+  });
 }
