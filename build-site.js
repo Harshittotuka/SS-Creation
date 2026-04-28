@@ -6,6 +6,11 @@ const data = JSON.parse(fs.readFileSync(path.join(root, "data/products.json"), "
 const shopTheLookData = JSON.parse(fs.readFileSync(path.join(root, "data/shop-the-look.json"), "utf8"));
 const products = data.products.map(normalizeProduct);
 const shopTheLookVideos = shopTheLookData.videos || [];
+const CONTACT_EMAIL = "monikagupta2514@gmail.com";
+const CONTACT_PHONE = "9950440550";
+const WHATSAPP_NUMBER = "919950440550";
+const MANUFACTURER_NAME = "SS Creation";
+const MANUFACTURER_ADDRESS = "S - 21 Sachivalaya vihar, kalyanpura, Mansarovar jaipur 302029";
 
 const nav = [
   ["Home", "/"],
@@ -47,6 +52,7 @@ for (const product of products) {
 write("pages/contact/index.html", contentPage("Contact", contactCopy()));
 write("pages/about-us/index.html", contentPage("About Us", aboutCopy()));
 write("blogs/news/index.html", blogPage());
+write("search/index.html", searchPage());
 
 function normalizeProduct(product) {
   const variants = product.variants || [];
@@ -97,17 +103,15 @@ function layout(title, body, extraClass = "") {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${escapeHtml(title)} - Roohaniyat Jaipur</title>
+  <title>${escapeHtml(title)} - SSCreation</title>
   <meta name="theme-color" content="#800000">
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
   <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-  <link rel="preload" as="font" href="https://roohaniyatjaipur.com/cdn/fonts/roboto/roboto_n4.2019d890f07b1852f56ce63ba45b2db45d852cba.woff2" type="font/woff2" crossorigin>
-  <link rel="preload" as="font" href="https://roohaniyatjaipur.com/cdn/fonts/proza_libre/prozalibre_n4.f0507b32b728d57643b7359f19cd41165a2ba3ad.woff2" type="font/woff2" crossorigin>
-  <link rel="shortcut icon" href="https://roohaniyatjaipur.com/cdn/shop/files/8jbmgvaw_f85dc791-fd2d-4fe4-9812-1b28a6675ada.png?crop=center&height=32&v=1701963846&width=32" type="image/png">
+  <link rel="icon" href="/assets/favicon-ss-creation.png" type="image/png">
   <link rel="stylesheet" href="/styles.css">
   <script defer src="/app.js"></script>
 </head>
-<body id="roohaniyat-jaipur" class="${extraClass}">
+<body id="sscreation" class="${extraClass}">
   ${mobileDrawer()}
   ${header()}
   <main class="site-wrap">${body}</main>
@@ -123,15 +127,18 @@ function header() {
   <span class="announcement-text" data-announcement-text></span>
   <button type="button" data-announcement-next aria-label="Next announcement">&rsaquo;</button>
 </div>
-<h1 class="visually-hidden">Roohaniyat Jaipur</h1>
+<h1 class="visually-hidden">SSCreation</h1>
 <header class="site-header">
   <section class="header-main">
     <div>
       <button class="icon-button" type="button" data-menu-open aria-label="Open navigation">${hamburger()}</button>
     </div>
-    <a class="logo" href="/"><img src="https://roohaniyatjaipur.com/cdn/shop/files/logo-525333_header_logo_4c91e59a-623c-431c-af2f-fd13503b2276.png?v=1698824354&width=800" alt="Roohaniyat Jaipur"></a>
+    <a class="logo" href="/"><img src="/assets/logo-ss-creation.png" alt="SS Creation" width="700" height="241" decoding="async"></a>
     <div class="header-actions">
-      <a class="icon-button" href="/collections/new-arrival/" aria-label="Search">Search</a>
+      <form class="header-search" action="/search/" method="get" role="search">
+        <input type="search" name="q" placeholder="Search" aria-label="Search products" autocomplete="off">
+        <button type="submit">Search</button>
+      </form>
       <a class="icon-button" href="/cart" data-cart-open aria-label="Open cart">${bag()}<span class="cart-count" data-cart-count>0</span></a>
     </div>
   </section>
@@ -142,9 +149,9 @@ function header() {
 function mobileDrawer() {
   return `<aside class="mobile-drawer" data-mobile-menu>
   <button class="drawer-close" type="button" data-menu-close>CLOSE &times;</button>
-  <form class="mobile-search" action="/collections/new-arrival/"><input type="text" placeholder="Search"></form>
+  <form class="mobile-search" action="/search/" method="get" role="search"><input type="search" name="q" placeholder="Search products" aria-label="Search products" autocomplete="off"></form>
   <nav class="mobile-nav">${nav.map(([label, href]) => `<a href="${href}">${escapeHtml(label)}</a>`).join("")}</nav>
-  <p><em>(C) 2022 - 2023 All Rights Reserved | ROOHANIYAT JAIPUR</em></p>
+  <p><em>(C) 2025-2026 All Rights Reserved | SSCreation</em></p>
 </aside>`;
 }
 
@@ -162,15 +169,15 @@ function footer() {
     <div>
       <h3>Let's Keep In Touch</h3>
       <p>Signup for exclusive offers and promotions.</p>
-      <p>roohaniyatjaipur@gmail.com | +918560904132</p>
+      <p>${CONTACT_EMAIL} | ${CONTACT_PHONE}</p>
     </div>
     <div>
-      <h3>Manufactured by</h3>
-      <p>Vastraa Exports<br>80/435, Shankaracharya Marg, Mansarovar, Jaipur, 302020</p>
+      <h3>Manufactured by : ${MANUFACTURER_NAME}</h3>
+      <p>${MANUFACTURER_ADDRESS}</p>
       <p><a href="/pages/about-us/">About Us</a> | <a href="/pages/contact/">Contact</a></p>
     </div>
   </div>
-  <p>&copy; 2026 All Rights Reserved | Roohaniyat Jaipur</p>
+  <p>&copy; 2026 All Rights Reserved | SSCreation</p>
 </footer>`;
 }
 
@@ -202,7 +209,6 @@ function homePage() {
     ${slideshow([
       ["https://roohaniyatjaipur.com/cdn/shop/files/HAND_MADE_PRODUCTS_6be530a6-d761-4f3a-8a61-ad102487a489.png?v=1762253920", "/collections/new-arrival/"],
       ["https://roohaniyatjaipur.com/cdn/shop/files/HAND_MADE_PRODUCTS_c64d1c08-d190-43f1-af58-6a6fc6ad63e5.png?v=1759143865", "/collections/new-arrival/"],
-      ["https://roohaniyatjaipur.com/cdn/shop/files/ROOHANIYAT.png?v=1746784492", "/collections/sale/"],
     ])}
     ${sectionHeading("STYLIST RECOMMENDATION", "Style as per Specialist")}
     <section class="global-section section-tight"><div class="image-grid">
@@ -219,7 +225,7 @@ function homePage() {
     <div class="marquee-band"><div>${Array(12).fill("<span>EXTRA 5% OFF ON PREPAID ORDERS (RAZORPAY)</span>").join("")}</div></div>
     <section class="global-section"><div class="brand-intro">
       <h2>India's Leading Ethnic Wear Brand for Modern Women</h2>
-      <p>At Roohaniyat, every outfit is a celebration of fashion traditions and cultural heritage. Our journey of trying to becoming the most trusted ethnic fashion brand is a testimony of our commitment to quality and fine craftsmanship.</p>
+      <p>At SSCreation, every outfit is a celebration of fashion traditions and cultural heritage. Our journey of trying to becoming the most trusted ethnic fashion brand is a testimony of our commitment to quality and fine craftsmanship.</p>
     </div></section>
     ${slideshow([["https://roohaniyatjaipur.com/cdn/shop/files/WhatsApp_Image_2023-11-30_at_20.16.15.jpg?v=1701355729", "/collections/new-arrival/"]])}
     ${sectionHeading("Shop By Category", "Be Your Own Style Icon")}
@@ -229,12 +235,12 @@ function homePage() {
       ${imageLink("/collections/casual-picks/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20231130-WA0023.jpg?v=1701382986")}
       ${imageLink("/collections/wedding-slides/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20231130-WA0025.jpg?v=1701382985")}
     </div></section>
-    ${sectionHeading("Give The Gift Of Cheerfulness", "You can have anything you want in life if you dress for it. Spread love with Roohaniyat")}
+    ${sectionHeading("Give The Gift Of Cheerfulness", "You can have anything you want in life if you dress for it. Spread love with SSCreation")}
     <section class="global-section gift-banner section-tight"><a class="image-shell" href="/collections/gift-cards/">${lazyImg("https://cdn.shopify.com/s/files/1/0632/9656/9522/files/rooh_gift_card_banner.jpg?v=1701196517", "Shop gift cards")}</a></section>
     ${pressSection()}
-    ${sectionHeading("Rooh Of Roohaniyat", "True Souls Of Roohaniyat")}
+    ${sectionHeading("Rooh Of SSCreation", "True Souls Of SSCreation")}
     ${storyStrip(["test1.jpg?v=1701538692?v=1704873366", "test8.png?v=1702078788", "test3.jpg?v=1701538692", "test4.jpg?v=1701538693", "test2.png?v=1701195007", "test6.jpg?v=1701538692", "test5.jpg?v=1701538692", "test8.png?v=1702078788"])}
-    ${sectionHeading("Roots Of Roohaniyat", "Behind The Scenes")}
+    ${sectionHeading("Roots Of SSCreation", "Behind The Scenes")}
     <section class="global-section"><div class="long-copy">${brandLongCopy()}</div></section>
   `, "template-index");
 }
@@ -264,7 +270,7 @@ function productPage(product) {
         <p class="trust-copy">EXTRA 5% OFF ON PREPAID ORDERS</p>
         ${productForm(product, usableVariants, true)}
         <h3>Get a flat 15% off on all ethnic wear + a FREE vibrant dupatta</h3>
-        <p>${escapeHtml(product.descriptionText || "Invigorate your wardrobe collection this season by adding the captivating collection by Roohaniyat.")}</p>
+        <p>${escapeHtml(product.descriptionText || "Invigorate your wardrobe collection this season by adding the captivating collection by SSCreation.")}</p>
         <h3>Shipping</h3>
         <p>Free shipping is available on all products across India. Depending upon the location, the product is delivered within 5-7 working days after dispatch.</p>
       </div>
@@ -280,10 +286,32 @@ function blogPage() {
   return contentPage("Blogs", blogCopy());
 }
 
+function searchPage() {
+  return layout("Search", `
+    <section class="page-title search-title" data-search-page>
+      <h1>Search</h1>
+      <form class="search-page-form" action="/search/" method="get" role="search">
+        <input type="search" name="q" placeholder="Search products" aria-label="Search products" autocomplete="off" data-search-input>
+        <button type="submit">Search</button>
+      </form>
+      <p data-search-summary>Enter a product name, color, fabric, or SKU.</p>
+    </section>
+    <section class="collection-grid search-grid" data-search-results>${products.map(productCard).join("")}</section>
+    <p class="search-empty" data-search-empty hidden>No matching products found.</p>
+  `, "template-search");
+}
+
 function productCard(product) {
   const variants = product.variants.filter((variant) => variant.available);
   const usableVariants = variants.length ? variants : product.variants;
-  return `<article class="product-card">
+  const searchText = [
+    product.title,
+    product.handle,
+    ...(product.tags || []),
+    ...(product.vendor ? [product.vendor] : []),
+    ...product.variants.flatMap((variant) => [variant.title, variant.sku]),
+  ].filter(Boolean).join(" ");
+  return `<article class="product-card" data-search-card data-search-text="${escapeAttr(searchText).toLowerCase()}">
   <a class="product-image-wrap image-shell" href="/products/${product.handle}/">
     ${product.onSale ? '<span class="sale-badge">On Sale Now</span>' : ""}
     ${lazyImg(product.image, product.title, `data-card-image data-primary="${escapeAttr(product.image)}" data-hover="${escapeAttr(product.hoverImage)}"`)}
@@ -377,27 +405,27 @@ function contactCopy() {
   return `<section class="page-hero page-hero-contact">
     <div>
       <p class="page-kicker">Contact</p>
-      <h1>Roohaniyat Jaipur</h1>
+      <h1>SSCreation</h1>
       <p>Reach the team for order support, wholesale queries, and product availability.</p>
-      <a class="button" href="https://wa.me/919829027413">WhatsApp Us</a>
+      <a class="button" href="https://wa.me/${WHATSAPP_NUMBER}">WhatsApp Us</a>
     </div>
   </section>
   <section class="info-grid">
-    <article><span>Email</span><strong>roohaniyatjaipur@gmail.com</strong></article>
-    <article><span>Phone</span><strong>+918560904132</strong></article>
-    <article><span>WhatsApp Orders</span><strong>+919829027413</strong></article>
+    <article><span>Email</span><strong>${CONTACT_EMAIL}</strong></article>
+    <article><span>Phone</span><strong>${CONTACT_PHONE}</strong></article>
+    <article><span>WhatsApp Orders</span><strong>${CONTACT_PHONE}</strong></article>
   </section>
   <section class="contact-panel">
     <div>
-      <h2>Manufactured by Vastraa Exports</h2>
-      <p>80/435, Shankaracharya Marg, Mansarovar, Jaipur, 302020</p>
+      <h2>Manufactured by : ${MANUFACTURER_NAME}</h2>
+      <p>${MANUFACTURER_ADDRESS}</p>
       <p>Jaipur, Rajasthan, India</p>
     </div>
     <form class="contact-form">
       <input type="text" placeholder="Name">
       <input type="email" placeholder="Email">
       <textarea rows="5" placeholder="Message"></textarea>
-      <a class="button" href="mailto:roohaniyatjaipur@gmail.com">Send Email</a>
+      <a class="button" href="mailto:${CONTACT_EMAIL}">Send Email</a>
     </form>
   </section>`;
 }
@@ -407,16 +435,16 @@ function aboutCopy() {
     <div>
       <p class="page-kicker">About Us</p>
       <h1>Rooted in Jaipur, made for modern celebrations</h1>
-      <p>Roohaniyat Jaipur brings traditional prints, embroidery, and festive silhouettes to contemporary ethnic wardrobes.</p>
+      <p>SSCreation brings traditional prints, embroidery, and festive silhouettes to contemporary ethnic wardrobes.</p>
     </div>
   </section>
   <section class="about-story">
     <div>
       <h2>Our Story</h2>
-      <p>Pratiksha Akar is the visionary founder behind the Jaipur-based label Roohaniyat. The brand celebrates craft, color, and effortless Indian dressing through collections that feel festive, wearable, and soulful.</p>
+      <p>Pratiksha Akar is the visionary founder behind the Jaipur-based label SSCreation. The brand celebrates craft, color, and effortless Indian dressing through collections that feel festive, wearable, and soulful.</p>
       <p>Every outfit carries a little of Rajasthan's textile language, from hand-inspired motifs and rich palettes to everyday cottons and occasion-ready silhouettes.</p>
     </div>
-    <div class="image-shell">${lazyImg("https://cdn.shopify.com/s/files/1/0632/9656/9522/files/15_7a203569-4e4d-439a-a810-bcc42aaee14d.jpg?v=1703654310&width=900", "Roohaniyat Jaipur story")}</div>
+    <div class="image-shell">${lazyImg("https://cdn.shopify.com/s/files/1/0632/9656/9522/files/15_7a203569-4e4d-439a-a810-bcc42aaee14d.jpg?v=1703654310&width=900", "SSCreation story")}</div>
   </section>
   <section class="info-grid">
     <article><span>Craft</span><strong>Traditional dyeing and tailoring techniques</strong></article>
@@ -427,7 +455,7 @@ function aboutCopy() {
 
 function blogCopy() {
   const posts = [
-    ["Embracing Diversity: Roohaniyat's Fashion Revolution", "Roohaniyat Jaipur celebrates timeless Indian craft with contemporary silhouettes made for modern wardrobes.", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20240305-WA0034.jpg?v=1709652298"],
+    ["Embracing Diversity: SSCreation's Fashion Revolution", "SSCreation celebrates timeless Indian craft with contemporary silhouettes made for modern wardrobes.", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20240305-WA0034.jpg?v=1709652298"],
     ["Exploring the Indian block print's rich cultural history", "From Jaipur to Bagru and Sanganer, traditional motifs continue to inspire handcrafted ethnic wear.", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20240305-WA0032.jpg?v=1709652298"],
     ["How to style ethnic wear for every celebration", "A quiet guide to festive dressing, easy layering, and silhouettes that move beautifully through the day.", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20231130-WA0025.jpg?v=1701382985"],
   ];
@@ -435,13 +463,13 @@ function blogCopy() {
     <div>
       <p class="page-kicker">Blogs</p>
       <h1>Stories of craft, color and celebration</h1>
-      <p>Notes from the world of Roohaniyat Jaipur.</p>
+      <p>Notes from the world of SSCreation.</p>
     </div>
   </section>
   <section class="blog-grid">${posts.map(([title, excerpt, image]) => `<article>
     <div class="image-shell">${lazyImg(image, title)}</div>
     <div>
-      <span>Roohaniyat Journal</span>
+      <span>SSCreation Journal</span>
       <h2>${escapeHtml(title)}</h2>
       <p>${escapeHtml(excerpt)}</p>
     </div>
@@ -457,12 +485,12 @@ function placeholder() {
 }
 
 function brandLongCopy() {
-  return `<h3>ROOHANIYAT JAIPUR: ELEVATING TRADITIONAL ELEGANCE WITH AFFORDABLE EXCELLENCE</h3>
-  <p>Dive into the enchanting realm of Indian ethnic wear with Roohaniyat Jaipur, where timeless tradition meets contemporary affordability. Drawing inspiration from the cultural tapestry of Jaipur, our collection is a celebration of artistry and refined fashion.</p>
+  return `<h3>SSCreation: ELEVATING TRADITIONAL ELEGANCE WITH AFFORDABLE EXCELLENCE</h3>
+  <p>Dive into the enchanting realm of Indian ethnic wear with SSCreation, where timeless tradition meets contemporary affordability. Drawing inspiration from the cultural tapestry of Jaipur, our collection is a celebration of artistry and refined fashion.</p>
   <h3>SIGNATURE STYLE: AFFORDABLE ELEGANCE THROUGH HANDCRAFTED BEAUTY</h3>
-  <p>Discover the essence of Roohaniyat Jaipur through our signature style, an ode to affordable elegance achieved through meticulous craftsmanship. Every motif tells a story through layers of colors and patterns.</p>
+  <p>Discover the essence of SSCreation through our signature style, an ode to affordable elegance achieved through meticulous craftsmanship. Every motif tells a story through layers of colors and patterns.</p>
   <h3>DIVERSE FABRICS AND CRAFTSMANSHIP</h3>
-  <p>At Roohaniyat Jaipur, we prioritize style without compromising on comfort. Our treasure trove of fabrics includes cotton, chanderi, kota doria, silk, chiffon, and organza.</p>`;
+  <p>At SSCreation, we prioritize style without compromising on comfort. Our treasure trove of fabrics includes cotton, chanderi, kota doria, silk, chiffon, and organza.</p>`;
 }
 
 function hamburger() {

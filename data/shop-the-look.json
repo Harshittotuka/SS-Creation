@@ -1,5 +1,5 @@
 {
-  "source": "https://api.storista.io/worker/v3/widgets/?shop=roohaniyatj.myshopify.com&widget_id=DmGsDLJ3jixaBcX",
+  "source": "static export",
   "videos": [
     {
       "id": 899027,
@@ -12,7 +12,7 @@
       "id": 899028,
       "video": "https://cdn.storista.io/stories/b007a887740beb35cba2344ca4cef5e0bncsgemwnm.mp4",
       "poster": "https://cdn.storista.io/stories/2e3fb3f767a5b40998196846ed4b4493fnggiajzpi.jpg",
-      "productTitle": "Roohaniyat Jaipur Reel",
+      "productTitle": "SSCreation Jaipur Reel",
       "productHandle": "new-arrival"
     },
     {
@@ -40,15 +40,15 @@
       "id": 861278,
       "video": "https://cdn.storista.io/stories/7f87d0ddf3a5a18ab005ba9864d6f8a0sxnuffevxk.mp4",
       "poster": "https://cdn.storista.io/stories/4edc0828de0542ef8123d6e5851269a7xrkpovvcor.jpg",
-      "productTitle": "Roohaniyat Pearl Work Heavy Festive Suit Set",
-      "productHandle": "roohaniyat-pearl-work-heavy-festive-suit-set"
+      "productTitle": "SSCreation Pearl Work Heavy Festive Suit Set",
+      "productHandle": "SSCreation-pearl-work-heavy-festive-suit-set"
     },
     {
       "id": 861277,
       "video": "https://cdn.storista.io/stories/8db0600bbabc5114a10645f13de73179wjgcmvonwx.mp4",
       "poster": "https://cdn.storista.io/stories/627e50b9c1456d7d47ed09ef97663598gmipyyznvf.jpg",
-      "productTitle": "Roohaniyat Pink Festive Wear Heavy Suit Set",
-      "productHandle": "roohaniyat-pink-festive-wear-heavy-suit-set"
+      "productTitle": "SSCreation Pink Festive Wear Heavy Suit Set",
+      "productHandle": "SSCreation-pink-festive-wear-heavy-suit-set"
     },
     {
       "id": 869356,

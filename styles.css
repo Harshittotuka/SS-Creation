@@ -196,9 +196,19 @@ select {
   padding: 0 42px;
 }
 
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: min(320px, 42vw);
+}
+
 .logo img {
-  width: 235px;
+  display: block;
+  width: 100%;
   height: auto;
+  max-height: 70px;
+  object-fit: contain;
 }
 
 .header-actions {
@@ -206,6 +216,34 @@ select {
   justify-content: flex-end;
   align-items: center;
   gap: 14px;
+}
+
+.header-search {
+  display: flex;
+  align-items: center;
+  width: min(280px, 28vw);
+  border: 1px solid var(--border);
+  background: #fff;
+}
+
+.header-search input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  padding: 9px 10px;
+  color: var(--text);
+  outline: 0;
+}
+
+.header-search button {
+  border: 0;
+  border-left: 1px solid var(--border);
+  background: #fff;
+  color: var(--brand);
+  cursor: pointer;
+  padding: 9px 11px;
+  font-size: 12px;
+  text-transform: uppercase;
 }
 
 .icon-button {
@@ -366,8 +404,11 @@ h4 {
 }
 
 .category-icons img {
-  max-width: 100px;
+  width: 100px;
+  height: 100px;
   margin: 0 auto 6px;
+  border-radius: 50%;
+  object-fit: contain;
 }
 
 .category-icons p {
@@ -961,6 +1002,43 @@ h4 {
   text-transform: uppercase;
 }
 
+.search-title {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.search-page-form {
+  display: flex;
+  gap: 10px;
+  margin: 20px auto 12px;
+}
+
+.search-page-form input {
+  min-width: 0;
+  flex: 1;
+  border: 1px solid var(--border);
+  padding: 13px 14px;
+}
+
+.search-page-form button {
+  border: 0;
+  background: var(--brand);
+  color: #fff;
+  cursor: pointer;
+  padding: 13px 22px;
+  text-transform: uppercase;
+}
+
+.search-title p,
+.search-empty {
+  color: var(--light-text);
+  text-align: center;
+}
+
+.search-empty {
+  margin: 0 0 70px;
+}
+
 .collection-grid {
   max-width: 1600px;
   margin: 0 auto;
@@ -1445,16 +1523,28 @@ h4 {
     padding: 0 14px;
   }
 
+  .logo {
+    width: min(210px, 46vw);
+  }
+
   .logo img {
-    width: 175px;
+    max-height: 54px;
   }
 
   .desktop-nav {
     display: none;
   }
 
+  .header-search {
+    display: none;
+  }
+
   .global-section {
     padding: 34px 16px;
+  }
+
+  .search-page-form {
+    flex-direction: column;
   }
 
   .category-icons {
@@ -1464,7 +1554,8 @@ h4 {
   }
 
   .category-icons img {
-    max-width: 100%;
+    width: clamp(64px, 20vw, 86px);
+    height: clamp(64px, 20vw, 86px);
   }
 
   .category-icons p {

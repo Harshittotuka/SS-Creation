@@ -1,5 +1,5 @@
-const WHATSAPP_NUMBER = "919829027413";
-const CART_KEY = "roohaniyat-cart";
+const WHATSAPP_NUMBER = "919950440550";
+const CART_KEY = "sscreation-cart";
 
 const money = new Intl.NumberFormat("en-IN", {
   style: "currency",
@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   bindLazyImages();
   bindLookVideos();
   bindCardImageSwaps();
+  bindSearchPage();
   bindCart();
   updateCart();
 });
@@ -596,6 +597,45 @@ function bindCardImageSwaps() {
   });
 }
 
+function bindSearchPage() {
+  const page = document.querySelector("[data-search-page]");
+  const grid = document.querySelector("[data-search-results]");
+  if (!page || !grid) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const query = (params.get("q") || "").trim();
+  const input = page.querySelector("[data-search-input]");
+  const summary = page.querySelector("[data-search-summary]");
+  const empty = document.querySelector("[data-search-empty]");
+  const cards = Array.from(grid.querySelectorAll("[data-search-card]"));
+
+  if (input) input.value = query;
+  const normalized = normalizeSearch(query);
+  let visible = 0;
+
+  cards.forEach((card) => {
+    const haystack = normalizeSearch(card.dataset.searchText || card.textContent || "");
+    const match = !normalized || normalized.split(/\s+/).every((term) => haystack.includes(term));
+    card.hidden = !match;
+    if (match) visible += 1;
+  });
+
+  if (summary) {
+    summary.textContent = normalized
+      ? `${visible} result${visible === 1 ? "" : "s"} for "${query}"`
+      : "Enter a product name, color, fabric, or SKU.";
+  }
+  if (empty) empty.hidden = visible !== 0;
+}
+
+function normalizeSearch(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/&amp;/g, "and")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
 function bindCart() {
   const drawer = document.querySelector("[data-cart-drawer]");
   document.querySelectorAll("[data-cart-open]").forEach((button) => {
@@ -789,7 +829,7 @@ function openWhatsApp() {
   }
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const lines = [
-    "Hello Roohaniyat Jaipur, I want to place this order:",
+    "Hello SSCreation, I want to place this order:",
     "",
     ...cart.map((item, index) => [
       `${index + 1}. ${item.title}`,
