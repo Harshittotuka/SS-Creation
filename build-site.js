@@ -103,7 +103,7 @@ function layout(title, body, extraClass = "") {
   <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
   <link rel="preload" as="font" href="https://roohaniyatjaipur.com/cdn/fonts/roboto/roboto_n4.2019d890f07b1852f56ce63ba45b2db45d852cba.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="font" href="https://roohaniyatjaipur.com/cdn/fonts/proza_libre/prozalibre_n4.f0507b32b728d57643b7359f19cd41165a2ba3ad.woff2" type="font/woff2" crossorigin>
-  <link rel="shortcut icon" href="https://roohaniyatjaipur.com/cdn/shop/files/8jbmgvaw_f85dc791-fd2d-4fe4-9812-1b28a6675ada.png?crop=center&height=32&v=1701963846&width=32" type="image/png">
+  <link rel="shortcut icon" href="/assets/images/8jbmgvaw_f85dc791-fd2d-4fe4-9812-1b28a6675ada-0a0cdcae69.png" type="image/png">
   <link rel="stylesheet" href="/styles.css">
   <script defer src="/app.js"></script>
 </head>
@@ -129,7 +129,7 @@ function header() {
     <div>
       <button class="icon-button" type="button" data-menu-open aria-label="Open navigation">${hamburger()}</button>
     </div>
-    <a class="logo" href="/"><img src="https://roohaniyatjaipur.com/cdn/shop/files/logo-525333_header_logo_4c91e59a-623c-431c-af2f-fd13503b2276.png?v=1698824354&width=800" alt="Roohaniyat Jaipur"></a>
+    <a class="logo" href="/"><img src="/assets/images/logo-525333_header_logo_4c91e59a-623c-431c-af2f-fd13503b2276-dc3889fb15.png" alt="Roohaniyat Jaipur"></a>
     <div class="header-actions">
       <a class="icon-button" href="/collections/new-arrival/" aria-label="Search">Search</a>
       <a class="icon-button" href="/cart" data-cart-open aria-label="Open cart">${bag()}<span class="cart-count" data-cart-count>0</span></a>
@@ -193,23 +193,23 @@ function homePage() {
   return layout("Home", `
     <section class="global-section section-tight">
       <div class="category-icons">
-        ${categoryIcon("/collections/sale/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/roohaniyat_1.png?v=1712210154", "Best Deal")}
-        ${categoryIcon("/collections/ready-to-dispatch/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/roohaniyat_2.png?v=1712210153", "Trending")}
-        ${categoryIcon("/collections/new-arrival/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/roohaniyat_3.png?v=1712210155", "New Arrival")}
-        ${categoryIcon("/collections/best-sellers/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/roohaniyat_4.png?v=1712210154", "Best Seller")}
+        ${categoryIcon("/collections/sale/", "/assets/images/roohaniyat_1-623e4a3434.png", "Best Deal")}
+        ${categoryIcon("/collections/ready-to-dispatch/", "/assets/images/roohaniyat_2-c72724c9de.png", "Trending")}
+        ${categoryIcon("/collections/new-arrival/", "/assets/images/roohaniyat_3-f23500cc0d.png", "New Arrival")}
+        ${categoryIcon("/collections/best-sellers/", "/assets/images/roohaniyat_4-168352a671.png", "Best Seller")}
       </div>
     </section>
     ${slideshow([
-      ["https://roohaniyatjaipur.com/cdn/shop/files/HAND_MADE_PRODUCTS_6be530a6-d761-4f3a-8a61-ad102487a489.png?v=1762253920", "/collections/new-arrival/"],
-      ["https://roohaniyatjaipur.com/cdn/shop/files/HAND_MADE_PRODUCTS_c64d1c08-d190-43f1-af58-6a6fc6ad63e5.png?v=1759143865", "/collections/new-arrival/"],
-      ["https://roohaniyatjaipur.com/cdn/shop/files/ROOHANIYAT.png?v=1746784492", "/collections/sale/"],
+      ["/assets/images/HAND_MADE_PRODUCTS_6be530a6-d761-4f3a-8a61-ad102487a489-18f8744b46.png", "/collections/new-arrival/"],
+      ["/assets/images/HAND_MADE_PRODUCTS_c64d1c08-d190-43f1-af58-6a6fc6ad63e5-4cc17b9e13.png", "/collections/new-arrival/"],
+      ["/assets/images/ROOHANIYAT-4f7598cdf8.png", "/collections/sale/"],
     ])}
     ${sectionHeading("STYLIST RECOMMENDATION", "Style as per Specialist")}
     <section class="global-section section-tight"><div class="image-grid">
-      ${imageLink("/collections/festive-vibes/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20240305-WA0034.jpg?v=1709652298")}
-      ${imageLink("/collections/floral-affairs/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20240305-WA0032.jpg?v=1709652298")}
-      ${imageLink("/collections/casual-picks/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20240305-WA0033.jpg?v=1709652298")}
-      ${imageLink("/collections/wedding-slides/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20240305-WA0030.jpg?v=1709652298")}
+      ${imageLink("/collections/festive-vibes/", "/assets/images/IMG-20240305-WA0034-ca98e474bb.jpg")}
+      ${imageLink("/collections/floral-affairs/", "/assets/images/IMG-20240305-WA0032-8b4067c895.jpg")}
+      ${imageLink("/collections/casual-picks/", "/assets/images/IMG-20240305-WA0033-53e12e551a.jpg")}
+      ${imageLink("/collections/wedding-slides/", "/assets/images/IMG-20240305-WA0030-f4f398372d.jpg")}
     </div></section>
     ${sectionHeading("NEW ARRIVAL", "Twirl and Slay in Latest")}
     ${productCarousel(newArrival, "New Arrival")}
@@ -221,19 +221,19 @@ function homePage() {
       <h2>India's Leading Ethnic Wear Brand for Modern Women</h2>
       <p>At Roohaniyat, every outfit is a celebration of fashion traditions and cultural heritage. Our journey of trying to becoming the most trusted ethnic fashion brand is a testimony of our commitment to quality and fine craftsmanship.</p>
     </div></section>
-    ${slideshow([["https://roohaniyatjaipur.com/cdn/shop/files/WhatsApp_Image_2023-11-30_at_20.16.15.jpg?v=1701355729", "/collections/new-arrival/"]])}
+    ${slideshow([["/assets/images/WhatsApp_Image_2023-11-30_at_20.16.15-634f9803d3.jpg", "/collections/new-arrival/"]])}
     ${sectionHeading("Shop By Category", "Be Your Own Style Icon")}
     <section class="global-section section-tight"><div class="image-grid">
-      ${imageLink("/collections/festive-vibes/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20231130-WA0024.jpg?v=1701382987")}
-      ${imageLink("/collections/floral-affairs/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20231130-WA0022.jpg?v=1701382987")}
-      ${imageLink("/collections/casual-picks/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20231130-WA0023.jpg?v=1701382986")}
-      ${imageLink("/collections/wedding-slides/", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20231130-WA0025.jpg?v=1701382985")}
+      ${imageLink("/collections/festive-vibes/", "/assets/images/IMG-20231130-WA0024-b1b2293030.jpg")}
+      ${imageLink("/collections/floral-affairs/", "/assets/images/IMG-20231130-WA0022-9f37bf5975.jpg")}
+      ${imageLink("/collections/casual-picks/", "/assets/images/IMG-20231130-WA0023-2931ef65c9.jpg")}
+      ${imageLink("/collections/wedding-slides/", "/assets/images/IMG-20231130-WA0025-4e1119ad3d.jpg")}
     </div></section>
     ${sectionHeading("Give The Gift Of Cheerfulness", "You can have anything you want in life if you dress for it. Spread love with Roohaniyat")}
-    <section class="global-section gift-banner section-tight"><a class="image-shell" href="/collections/gift-cards/">${lazyImg("https://cdn.shopify.com/s/files/1/0632/9656/9522/files/rooh_gift_card_banner.jpg?v=1701196517", "Shop gift cards")}</a></section>
+    <section class="global-section gift-banner section-tight"><a class="image-shell" href="/collections/gift-cards/">${lazyImg("/assets/images/rooh_gift_card_banner-965e089bba.jpg", "Shop gift cards")}</a></section>
     ${pressSection()}
     ${sectionHeading("Rooh Of Roohaniyat", "True Souls Of Roohaniyat")}
-    ${storyStrip(["test1.jpg?v=1701538692?v=1704873366", "test8.png?v=1702078788", "test3.jpg?v=1701538692", "test4.jpg?v=1701538693", "test2.png?v=1701195007", "test6.jpg?v=1701538692", "test5.jpg?v=1701538692", "test8.png?v=1702078788"])}
+    ${storyStrip(["/assets/images/test1-1d3d4492e9.jpg", "/assets/images/test8-be3915e075.png", "/assets/images/test3-b64e2d8061.jpg", "/assets/images/test4-ab399493dc.jpg", "/assets/images/test2-9306124b22.png", "/assets/images/test6-4116a467a6.jpg", "/assets/images/test5-c1e3eda746.jpg", "/assets/images/test8-be3915e075.png"])}
     ${sectionHeading("Roots Of Roohaniyat", "Behind The Scenes")}
     <section class="global-section"><div class="long-copy">${brandLongCopy()}</div></section>
   `, "template-index");
@@ -364,13 +364,13 @@ function imageLink(href, src) {
 
 function pressSection() {
   return `${sectionHeading("As Seen On", "")}<section class="global-section section-tight"><div class="press-row">
-    ${["mint_money.png?v=1699252741", "ys_c1c2d5c5-7e7a-40fe-bf24-1e8f259a469e.png?v=1699253278", "rajasthan_mirror.png?v=1699252741", "daily_hunt.png?v=1699252740", "pink_city_now.png?v=1699252741", "he.png?v=1699253279"].map((name) => lazyImg(`https://cdn.shopify.com/s/files/1/0632/9656/9522/files/${name}`, "")).join("")}
+    ${["/assets/images/mint_money-52fc1c15a6.png", "/assets/images/ys_c1c2d5c5-7e7a-40fe-bf24-1e8f259a469e-eeab0bf67a.png", "/assets/images/rajasthan_mirror-ad37d1704b.png", "/assets/images/daily_hunt-048873453f.png", "/assets/images/pink_city_now-e41a02a98c.png", "/assets/images/he-535b26d40f.png"].map((src) => lazyImg(src, "")).join("")}
   </div></section>`;
 }
 
-function storyStrip(names) {
-  const doubled = names.concat(names);
-  return `<section class="story-strip section-tight"><ul>${doubled.map((name) => `<li>${lazyImg(`https://cdn.shopify.com/s/files/1/0632/9656/9522/files/${name}`, "")}</li>`).join("")}</ul></section>`;
+function storyStrip(images) {
+  const doubled = images.concat(images);
+  return `<section class="story-strip section-tight"><ul>${doubled.map((src) => `<li>${lazyImg(src, "")}</li>`).join("")}</ul></section>`;
 }
 
 function contactCopy() {
@@ -416,7 +416,7 @@ function aboutCopy() {
       <p>Pratiksha Akar is the visionary founder behind the Jaipur-based label Roohaniyat. The brand celebrates craft, color, and effortless Indian dressing through collections that feel festive, wearable, and soulful.</p>
       <p>Every outfit carries a little of Rajasthan's textile language, from hand-inspired motifs and rich palettes to everyday cottons and occasion-ready silhouettes.</p>
     </div>
-    <div class="image-shell">${lazyImg("https://cdn.shopify.com/s/files/1/0632/9656/9522/files/15_7a203569-4e4d-439a-a810-bcc42aaee14d.jpg?v=1703654310&width=900", "Roohaniyat Jaipur story")}</div>
+    <div class="image-shell">${lazyImg("/assets/images/15_7a203569-4e4d-439a-a810-bcc42aaee14d-6e62b59ef5.jpg", "Roohaniyat Jaipur story")}</div>
   </section>
   <section class="info-grid">
     <article><span>Craft</span><strong>Traditional dyeing and tailoring techniques</strong></article>
@@ -427,9 +427,9 @@ function aboutCopy() {
 
 function blogCopy() {
   const posts = [
-    ["Embracing Diversity: Roohaniyat's Fashion Revolution", "Roohaniyat Jaipur celebrates timeless Indian craft with contemporary silhouettes made for modern wardrobes.", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20240305-WA0034.jpg?v=1709652298"],
-    ["Exploring the Indian block print's rich cultural history", "From Jaipur to Bagru and Sanganer, traditional motifs continue to inspire handcrafted ethnic wear.", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20240305-WA0032.jpg?v=1709652298"],
-    ["How to style ethnic wear for every celebration", "A quiet guide to festive dressing, easy layering, and silhouettes that move beautifully through the day.", "https://cdn.shopify.com/s/files/1/0632/9656/9522/files/IMG-20231130-WA0025.jpg?v=1701382985"],
+    ["Embracing Diversity: Roohaniyat's Fashion Revolution", "Roohaniyat Jaipur celebrates timeless Indian craft with contemporary silhouettes made for modern wardrobes.", "/assets/images/IMG-20240305-WA0034-ca98e474bb.jpg"],
+    ["Exploring the Indian block print's rich cultural history", "From Jaipur to Bagru and Sanganer, traditional motifs continue to inspire handcrafted ethnic wear.", "/assets/images/IMG-20240305-WA0032-8b4067c895.jpg"],
+    ["How to style ethnic wear for every celebration", "A quiet guide to festive dressing, easy layering, and silhouettes that move beautifully through the day.", "/assets/images/IMG-20231130-WA0025-4e1119ad3d.jpg"],
   ];
   return `<section class="page-hero page-hero-blog">
     <div>
@@ -504,7 +504,7 @@ function write(file, html) {
 function relativizeRootUrls(file, html) {
   const depth = path.dirname(file) === "." ? 0 : path.dirname(file).split(/[\\/]/).length;
   const prefix = depth === 0 ? "" : "../".repeat(depth);
-  return html.replace(/\b(href|src|action)="\/(?!\/)([^"]*)"/g, (_, attr, value) => {
+  return html.replace(/\b(href|src|action|poster|data-lazy-src|data-primary|data-hover|data-image|data-thumb|data-video-src)="\/(?!\/)([^"]*)"/g, (_, attr, value) => {
     const relative = value ? `${prefix}${value}` : (prefix || "./");
     return `${attr}="${relative}"`;
   });

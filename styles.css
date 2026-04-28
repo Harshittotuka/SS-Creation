@@ -1069,19 +1069,19 @@ h4 {
 }
 
 .page-hero-about {
-  background-image: linear-gradient(90deg, rgba(255,255,255,.94), rgba(255,255,255,.62)), url("https://cdn.shopify.com/s/files/1/0632/9656/9522/files/4D3A5328.jpg?v=1757741244");
+  background-image: linear-gradient(90deg, rgba(255,255,255,.94), rgba(255,255,255,.62)), url("assets/images/4D3A5328-a9ae282af8.jpg");
   background-position: center 28%;
 }
 
 .page-hero-contact {
-  background-image: linear-gradient(90deg, rgba(255,255,255,.94), rgba(255,255,255,.66)), url("https://cdn.shopify.com/s/files/1/0632/9656/9522/files/hawa_mahal_1.png?v=1701118357");
+  background-image: linear-gradient(90deg, rgba(255,255,255,.94), rgba(255,255,255,.66)), url("assets/images/hawa_mahal_1-238d4b250f.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: right bottom;
 }
 
 .page-hero-blog {
-  background-image: linear-gradient(90deg, rgba(255,255,255,.94), rgba(255,255,255,.62)), url("https://cdn.shopify.com/s/files/1/0632/9656/9522/files/4D3A5339.jpg?v=1757740892");
+  background-image: linear-gradient(90deg, rgba(255,255,255,.94), rgba(255,255,255,.62)), url("assets/images/4D3A5339-51e8dbc19a.jpg");
   background-position: center 24%;
 }
 
@@ -1189,7 +1189,7 @@ h4 {
 
 .section-footer {
   background-color: var(--brand);
-  background-image: url("https://cdn.shopify.com/s/files/1/0632/9656/9522/files/hawa_mahal_1.png?v=1701118357");
+  background-image: url("assets/images/hawa_mahal_1-238d4b250f.png");
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: contain;

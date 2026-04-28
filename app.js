@@ -633,7 +633,7 @@ function addFromForm(form) {
   const product = {
     handle: form.dataset.handle,
     title: form.dataset.title,
-    image: form.dataset.image,
+    image: resolveUrl(form.dataset.image),
   };
   const item = {
     key: `${product.handle}:${selected.value}`,
@@ -656,6 +656,14 @@ function addFromForm(form) {
 
 function saveCart() {
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
+}
+
+function resolveUrl(value) {
+  try {
+    return new URL(value || "", window.location.href).href;
+  } catch {
+    return value || "";
+  }
 }
 
 function updateCart() {
